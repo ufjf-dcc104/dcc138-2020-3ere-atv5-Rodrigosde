@@ -20,8 +20,8 @@ export default class AssetManager{
 
     carregaAudio(chave, source){
         const audio = new Audio();
-        audio.addEventListener("canplay",() =>{
-            console.log(`Áudio ${this.carregadas}/${this.aCarregar} carregada"`);
+        audio.addEventListener("loadeddata",() =>{
+            console.log(`Áudio ${this.carregadas}/${this.aCarregar} carregado"`);
             this.carregadas++;
         })
 
