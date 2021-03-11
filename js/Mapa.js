@@ -15,7 +15,7 @@ export default class Mapa{
     desenhar(ctx){
         for (let l  = 0; l   < this.LINHAS; l++) {
             for (let c = 0; c < this.COLUNAS; c++) {
-                switch (this.tiles[l][c] = 0) {
+                switch (this.tiles[l][c]) {
                     case 1:
                         ctx.fillStyle = "grey";
                         ctx.fillRect(c*this.SIZE, l*this.SIZE, this.SIZE,this.SIZE);
