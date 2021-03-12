@@ -18,7 +18,7 @@ export default class Sprite{
     desenhar(ctx){
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x - this.w/2, this.y - this.h/2, this.w,this.h);
-        ctx.strokeStyle = "blue";
+        ctx.strokeStyle = "grey";
         ctx.strokeRect(
             this.mx*this.cena.mapa.SIZE , 
             this.my*this.cena.mapa.SIZE ,
@@ -70,7 +70,7 @@ export default class Sprite{
                     h: SIZE
                 };
 
-                this.cena.ctx.strokeStyle = "white"
+                this.cena.ctx.strokeStyle = "black"
                 this.cena.ctx.strokeRect(tile.x-SIZE/2,tile.y-SIZE/2,SIZE,SIZE);
                 if (this.colidiuCom(tile)) {
                     this.vx = 0;
