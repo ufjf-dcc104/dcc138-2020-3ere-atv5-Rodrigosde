@@ -3,14 +3,14 @@ import Cena from "./Cena.js"
 import Mapa from "./Mapa.js";
 import Mixer from "./Mixer.js";
 import Sprite from "./Sprite.js";
-import  modeloMapa1 from "./maps/mapa1.js";
+import modeloMapa1 from "../maps/mapa1.js";
 
 const mixer = new Mixer(10);
 const assets = new AssetManager(mixer);
 
-assets.carregaImagem("garota","assets/garota.png");
-assets.carregaImagem("skely","assets/esqueleto.png");
-assets.carregaImagem("orc","assets/orc.png");
+assets.carregaImagem("grama","assets/fundo1.png");
+assets.carregaImagem("fundo","assets/fundo.png");
+assets.carregaImagem("madeira","assets/madeira.png");
 assets.carregaAudio("moeda","assets/coin.wav");
 assets.carregaAudio("boom","assets/boom.wav");
 
@@ -23,9 +23,12 @@ const mapa1 = new Mapa(10, 14, 32);
 mapa1.carregaMapa(modeloMapa1);
 cena1.configuraMapa(mapa1);
 
-const pc = new Sprite({x: 50,y:150, vx:0.1});
-
+const pc = new Sprite({x: 56,y:148, vx:0.4});
 cena1.adicionar(pc);
+cena1.adicionar(new Sprite({x:115, y:70, vx:0.4}));
+
+cena1.adicionaSpriteAle(15);
+cena1.reposicionarSprite(4000);
 
 cena1.iniciar();
 
@@ -43,6 +46,5 @@ document.addEventListener("keydown", (e) =>{
         case "b":
             assets.play("boom");
             break;     
-            
     }
 });
