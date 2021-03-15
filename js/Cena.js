@@ -1,3 +1,5 @@
+import Sprite from "./Sprite.js";
+
 export default class Cena {
     //responsável por desenhar elementos na tela em uma animação
     constructor(canvas, assets = null){
@@ -12,12 +14,10 @@ export default class Cena {
         this.mapa = null;
     }
     desenhar(){
-        this.ctx.fillStyle = "white";
+       
         this.ctx.fillRect(0, 0, this.canvas.width,
         this.canvas.height);
-
-            this.mapa?.desenhar(this.ctx);
-
+        this.mapa?.desenhar(this.ctx);
         if (this.assets.acabou()) {
             for (let s = 0; s < this.sprites.length; s++) {
                 const sprite = this.sprites[s];
@@ -25,12 +25,8 @@ export default class Cena {
                 sprite.aplicaRestricoes();
             }
         }
-        this.ctx.fillStyle= "yellow";
+        this.ctx.fillStyle= "white";
         this.ctx.fillText(this.assets?.progresso(), 10, 20);
-    }
-    adicionar(sprite){
-        sprite.cena = this;
-        this.sprites.push(sprite);
     }
     passo(dt){
         if (this.assets.acabou()) {
@@ -69,20 +65,24 @@ export default class Cena {
             for (let b = a+1; b < this.sprites.length; b++) {
                 const spriteB = this.sprites[b];
                 if (spriteA.colidiuCom(spriteB)) {
-                   this.quandoColidir(spriteA, spriteB);
+                    this.quandoColidir(spriteA, spriteB);
+                   
                 }         
             }    
         }
     }
     quandoColidir(a,b){
+        
         if (!this.aRemover.includes(a)) {
             this.aRemover.push(a);
         }
         if (!this.aRemover.includes(b)) {
             this.aRemover.push(b);
         }
+       this.assets.play("boom");
     }
     removerSprites(){
+        
         for (const alvo of this.aRemover) {
             const idx = this.sprites.indexOf(alvo);
             if (idx >= 0) {
@@ -95,4 +95,51 @@ export default class Cena {
         this.mapa = mapa;
         this.mapa.cena = this;
     }
+
+    adicionar(sprite){
+        sprite.cena = this;
+        this.sprites.push(sprite);
+    }
+
+    valorCriado(min,max){
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max-min+1)) + min ; 
+    }
+    corCriado() {
+        let letras = "0123456789ABCDEF";
+        let cor = "#";
+        for (let i = 0; i < 6; i++) {
+          cor += letras[Math.floor(Math.random() * 16)];
+        }
+        return cor;
+      }
+
+    adicionaSpriteAle(n){
+        let sprites = this.criaSpriteAle();
+        for (let i = 0; i < sprites.length; i++) {
+            this.adicionar(sprites[i]);
+        }
+    }
+    
+    criaSpriteAle(n=1){
+        let sprites= [];
+        for (let i = 0; i < n; i++) {
+            let sprite = new Sprite({
+                x : this.valorCriado(32, 416),
+                y : this.valorCriado(32, 288),
+                vx : this.valorCriado(-1, 1),
+                vy : this.valorCriado(-1, 1),
+                cor : this.corCriado(),
+            });
+            sprites.push(sprite);
+        }
+        return sprites;
+    }
+    
+    reposicionarSprite(t){
+        setInterval(() => {
+            this.adicionaSpriteAle(1);
+        },t);
+    }   
 }

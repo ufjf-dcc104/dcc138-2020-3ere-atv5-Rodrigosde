@@ -3,7 +3,8 @@ export default class Sprite{
     É responsável por modelar algo que 
     se move na tela.
     */
-    constructor({x=100, y=100,vx=0,vy=0, w=20, h=20,color = "white"}={}){
+
+    constructor({x=100, y=100,vx=0,vy=0, w=20, h=20,color = "#708090"}={}){
         this.x = x;
         this.y = y;
         this.vx = vx;
@@ -41,60 +42,55 @@ export default class Sprite{
             this.y + this.h/2 < outro.y - outro.h/2
         );
     }
-    aplicaRestricoes(dt){
-        this.aplicaRestricoesDireita(this.mx + 1,this.my);
-        this.aplicaRestricoesDireita(this.mx + 1,this.my+1);
-        this.aplicaRestricoesDireita(this.mx + 1,this.my-1);
-
-        this.aplicaRestricoesEsquerda(this.mx - 1,this.my);
-        this.aplicaRestricoesEsquerda(this.mx - 1,this.my+1);
-        this.aplicaRestricoesEsquerda(this.mx - 1,this.my-1);
-
+    aplicaRestricoes(dt) {
+        this.aplicaRestricoesDireita(this.mx + 1, this.my - 1);
+        this.aplicaRestricoesDireita(this.mx + 1, this.my);
+        this.aplicaRestricoesDireita(this.mx + 1, this.my + 1);
+        this.aplicaRestricoesEsquerda(this.mx - 1, this.my - 1);
+        this.aplicaRestricoesEsquerda(this.mx - 1, this.my);
+        this.aplicaRestricoesEsquerda(this.mx - 1, this.my + 1);
+        this.aplicaRestricoesBaixo(this.mx - 1, this.my + 1);
         this.aplicaRestricoesBaixo(this.mx, this.my + 1);
-        this.aplicaRestricoesBaixo(this.mx+1, this.my + 1);
-        this.aplicaRestricoesBaixo(this.mx-1, this.my + 1);
-
+        this.aplicaRestricoesBaixo(this.mx + 1, this.my + 1);
+        this.aplicaRestricoesCima(this.mx - 1, this.my - 1);
         this.aplicaRestricoesCima(this.mx, this.my - 1);
-        this.aplicaRestricoesCima(this.mx+1, this.my - 1);
-        this.aplicaRestricoesCima(this.mx-1, this.my - 1);
-    }
+        this.aplicaRestricoesCima(this.mx + 1, this.my - 1);
+      }
     aplicaRestricoesDireita(pmx, pmy){
-        const SIZE =this.cena.mapa.SIZE;
-        if(this.vx > 0){
-            console.log(pmy,pmx);
-            if(this.cena.mapa.tiles[pmy][pmx] != 0){
-                const tile = {
-                    x: pmx*SIZE+SIZE/2, 
-                    y: pmy*SIZE+SIZE/2, 
-                    w: SIZE, 
-                    h: SIZE
-                };
-
-                this.cena.ctx.strokeStyle = "black"
-                this.cena.ctx.strokeRect(tile.x-SIZE/2,tile.y-SIZE/2,SIZE,SIZE);
-                if (this.colidiuCom(tile)) {
-                    this.vx = 0;
-                    this.x = tile.x - tile.w/2 - this.w/2 - 1;
-                }
+        if (this.vx > 0) {
+          const SIZE = this.cena.mapa.SIZE;
+          if (this.cena.mapa.tiles[pmy][pmx] != 0) {
+            const tile = {
+              x: pmx * SIZE + SIZE / 2,
+              y: pmy * SIZE + SIZE / 2,
+              w: SIZE,
+              h: SIZE,
+            };
+            this.cena.ctx.strokeStyle = "white";
+            this.cena.ctx.strokeRect(tile.x-SIZE/2, tile.y-SIZE/2, SIZE, SIZE);
+            if (this.colidiuCom(tile)) {
+              this.vx = 0;
+              this.x = tile.x - tile.w / 2 - this.w / 2 - 1;
             }
+          }
         }
-    }
+      }
     aplicaRestricoesEsquerda(pmx, pmy){
-        const SIZE =this.cena.mapa.SIZE;
         if(this.vx < 0){
-            console.log(pmy,pmx);
+            const SIZE =this.cena.mapa.SIZE;
+            //console.log(pmy,pmx);
             if(this.cena.mapa.tiles[pmy][pmx] != 0){
                 const tile = {
                     x: pmx*SIZE+SIZE/2, 
                     y: pmy*SIZE+SIZE/2, 
                     w: SIZE, 
-                    h: SIZE
+                    h: SIZE,
                 };
-
                 this.cena.ctx.strokeStyle = "white"
                 this.cena.ctx.strokeRect(tile.x-SIZE/2,tile.y-SIZE/2,SIZE,SIZE);
                 if (this.colidiuCom(tile)) {
                     this.vx = 0;
+    
                     this.x = tile.x + tile.w/2 + this.w/2 + 1;
                 }
             }
@@ -102,20 +98,22 @@ export default class Sprite{
     }
 
     aplicaRestricoesBaixo(pmx, pmy){
-        const SIZE =this.cena.mapa.SIZE;
+       
         if(this.vy > 0){
-            console.log(pmy,pmx);
+            const SIZE =this.cena.mapa.SIZE;
+            //console.log(pmy,pmx);
             if(this.cena.mapa.tiles[pmy][pmx] != 0){
                 const tile = {
                     x: pmx*SIZE+SIZE/2, 
                     y: pmy*SIZE+SIZE/2, 
                     w: SIZE, 
-                    h: SIZE
+                    h: SIZE,
                 };
 
                 this.cena.ctx.strokeStyle = "white"
                 this.cena.ctx.strokeRect(tile.x-SIZE/2,tile.y-SIZE/2,SIZE,SIZE);
                 if (this.colidiuCom(tile)) {
+
                     this.vy = 0;
                     this.y = tile.y - tile.h/2 - this.h/2 - 1;
                 }
@@ -123,22 +121,22 @@ export default class Sprite{
         }
     }
     aplicaRestricoesCima(pmx, pmy){
-        const SIZE =this.cena.mapa.SIZE;
         if(this.vy < 0){
-            console.log(pmy,pmx);
+            const SIZE =this.cena.mapa.SIZE;
+            //console.log(pmy,pmx);
             if(this.cena.mapa.tiles[pmy][pmx] != 0){
                 const tile = {
                     x: pmx*SIZE+SIZE/2, 
                     y: pmy*SIZE+SIZE/2, 
                     w: SIZE, 
-                    h: SIZE
+                    h: SIZE,
                 };
-
                 this.cena.ctx.strokeStyle = "white"
                 this.cena.ctx.strokeRect(tile.x-SIZE/2,tile.y-SIZE/2,SIZE,SIZE);
                 if (this.colidiuCom(tile)) {
                     this.vy = 0;
                     this.y = tile.y + tile.h/2 + this.h/2 + 1;
+                
                 }
             }
         }
