@@ -49,8 +49,7 @@ export default class Cena {
         this.to = t;
     }
     iniciar(){
-        this.idAnim = requestAnimationFrame(
-            (t) => {
+        this.idAnim = requestAnimationFrame((t) => {
                 this.quadro(t);
             }
         );

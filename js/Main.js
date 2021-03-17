@@ -72,15 +72,15 @@ cena1.adicionar(new Sprite({x:140, y:260, vx:0.4, color: "red",controlar:persegu
 //cena1.adicionaSpriteAle(15);
 //cena1.reposicionarSprite(4000);
 
-cena1.iniciar();
+game.iniciar();
 
 document.addEventListener("keydown", (e) =>{
     switch (e.key) {
         case "s":
-            cena1.iniciar();
+            game.iniciar();
             break;
         case "p":
-            cena1.parar();
+            game.parar();
             break;  
         case "c":
             assets.play("moeda");
