@@ -46,16 +46,24 @@ pc.controlar = function(dt){
         this.vx = 0;
     }
     if (input.comandos.get("MOVE_CIMA")) {
-        this.vy = -0.3;
+        this.vy = -0.5;
     }else if (input.comandos.get("MOVE_BAIXO")) {
-        this.vy = 0.3;
+        this.vy = 0.5;
     }else{
         this.vy = 0;
     }
 };
 
+function perseguePC(dt){
+    this.vx = 0.15 * Math.sign(pc.x - this.x);
+    this.vy = 0.15 * Math.sign(pc.y - this.y);
+}
+
 cena1.adicionar(pc);
-cena1.adicionar(new Sprite({x:115, y:70, vx:0.4}));
+const en1 = new Sprite({x:365,y:110,color: "red", controlar: perseguePC});
+cena1.adicionar(en1);
+cena1.adicionar(new Sprite({x:135, y:45, vx:0.4, color: "red",controlar:perseguePC}));
+cena1.adicionar(new Sprite({x:140, y:260, vx:0.4, color: "red",controlar:perseguePC}));
 
 //cena1.adicionaSpriteAle(15);
 //cena1.reposicionarSprite(4000);

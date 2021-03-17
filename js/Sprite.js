@@ -4,7 +4,16 @@ export default class Sprite{
     se move na tela.
     */
 
-    constructor({x=100, y=100,vx=0,vy=0, w=20, h=20,color = "#708090"}={}){
+    constructor({
+        x=100,
+        y=100,
+        vx=0,
+        vy=0,
+        w=20,
+        h=20,
+        color = "#708090",
+        controlar = ()=>{},
+}={}){
         this.x = x;
         this.y = y;
         this.vx = vx;
@@ -15,6 +24,7 @@ export default class Sprite{
         this.cena = null;
         this.mx = 0;
         this.my = 0; 
+        this.controlar =controlar;
     }
     desenhar(ctx){
         ctx.fillStyle = this.color;
@@ -29,7 +39,7 @@ export default class Sprite{
 
     }
     controlar(dt){
-        
+
     }
     mover(dt){
         this.x = this.x + this.vx * dt;
