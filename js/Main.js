@@ -24,6 +24,8 @@ input.configurarTeclado(
     {
         "ArrowLeft" : "MOVE_ESQUERDA",
         "ArrowRight" : "MOVE_DIREITA",
+        "ArrowUp" : "MOVE_CIMA",
+        "ArrowDown" : "MOVE_BAIXO",
     }
 );
 
@@ -34,6 +36,7 @@ mapa1.carregaMapa(modeloMapa1);
 cena1.configuraMapa(mapa1);
 
 const pc = new Sprite({x: 56,y:148});
+
 pc.controlar = function(dt){
     if (input.comandos.get("MOVE_ESQUERDA")) {
         this.vx = -0.3;
@@ -42,7 +45,15 @@ pc.controlar = function(dt){
     }else{
         this.vx = 0;
     }
+    if (input.comandos.get("MOVE_CIMA")) {
+        this.vy = -0.3;
+    }else if (input.comandos.get("MOVE_BAIXO")) {
+        this.vy = 0.3;
+    }else{
+        this.vy = 0;
+    }
 };
+
 cena1.adicionar(pc);
 cena1.adicionar(new Sprite({x:115, y:70, vx:0.4}));
 
