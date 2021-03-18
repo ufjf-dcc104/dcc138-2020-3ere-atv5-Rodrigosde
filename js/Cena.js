@@ -131,7 +131,7 @@ export default class Cena {
                 vx : this.valorCriado(-1, 1),
                 vy : this.valorCriado(-1, 1),
                 cor : this.corCriado(),
-                controlar: perseguePC,
+            
             });
             sprites.push(sprite);
         }
