@@ -13,6 +13,7 @@ export default class Sprite{
         h=20,
         color = "#708090",
         controlar = ()=>{},
+        tags = [],
 }={}){
         this.x = x;
         this.y = y;
@@ -25,6 +26,8 @@ export default class Sprite{
         this.mx = 0;
         this.my = 0; 
         this.controlar =controlar;
+        this.tags = new Set();
+        tags.forEach((tag)=>{this.tags.add(tag);});      
     }
     desenhar(ctx){
         ctx.fillStyle = this.color;
