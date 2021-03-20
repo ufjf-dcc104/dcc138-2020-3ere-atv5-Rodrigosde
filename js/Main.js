@@ -12,9 +12,10 @@ const input = new InputManager();
 const mixer = new Mixer(10);
 const assets = new AssetManager(mixer);
 
+assets.carregaImagem("favicon","assets/favicon.png");
 assets.carregaImagem("grama","assets/fundo1.png");
 assets.carregaImagem("fundo","assets/fundo.png");
-assets.carregaImagem("madeira","assets/madeira.png");
+assets.carregaImagem("moedas","assets/moeda.png");
 assets.carregaAudio("moeda","assets/coin.wav");
 assets.carregaAudio("boom","assets/boom.wav");
 

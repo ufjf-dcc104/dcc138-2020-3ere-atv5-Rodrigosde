@@ -20,7 +20,7 @@ export default class Mapa{
                        ctx.drawImage(this.cena.assets.img("fundo"),c*this.SIZE, l*this.SIZE);
                         break;
                     case 2:
-                        ctx.drawImage(this.cena.assets.img("madeira"),c*this.SIZE, l*this.SIZE);
+                        ctx.drawImage(this.cena.assets.img("moedas"),c*this.SIZE, l*this.SIZE);
                     break;
                     default:
                         ctx.drawImage(this.cena.assets.img("grama"),c*this.SIZE, l*this.SIZE);

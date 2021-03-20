@@ -1,5 +1,3 @@
-import Sprite from "./Sprite.js";
-
 export default class Cena {
   //responsável por desenhar elementos na tela em uma animação
   constructor(canvas = null, assets = null) {
@@ -19,8 +17,6 @@ export default class Cena {
         sprite.desenhar(this.ctx);
       }
     }
-    this.ctx.fillStyle = "white";
-    this.ctx.fillText(this.assets?.progresso(), 10, 20);
   }
   passo(dt) {
     if (this.assets.acabou()) {
