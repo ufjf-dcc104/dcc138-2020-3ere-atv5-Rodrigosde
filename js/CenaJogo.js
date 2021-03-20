@@ -9,6 +9,21 @@ export default class CenaJogo extends Cena{
         this.criar = 2;
         this.pc = null;
     }
+    desenhar() {
+        const pontos = 0;
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.mapa?.desenhar(this.ctx);
+        if (this.assets.acabou()) {
+          for (let s = 0; s < this.sprites.length; s++) {
+            const sprite = this.sprites[s];
+            sprite.aplicaRestricoes();
+            sprite.desenhar(this.ctx);
+          }
+        }
+        
+        this.ctx.fillStyle = "white";
+        this.ctx.fillText(pontos, 10, 20);
+    }
     passo(dt){
        
         for (const sprite of this.sprites) {
@@ -21,7 +36,7 @@ export default class CenaJogo extends Cena{
         }
     }
     quandoColidir(a,b){
-
+        
         if (!a.tags.has("enemy") &&  b.tags.has("enemy")) {
             this.assets.play("boom");
             this.rodando = false;
@@ -44,33 +59,32 @@ export default class CenaJogo extends Cena{
         max = Math.floor(max);
         return Math.floor(Math.random() * (max-min+1)) + min ; 
     }
-    corCriado(min,max) {
-        let cor = null;
-        let x = null;
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        x = Math.floor(Math.random() * (max - min + 1)) + min;
-        cor = `hsl ($ {x}, 50%, 50%)`;
-        console.log(cor);
-        return cor;
+     
+    corCriado() { 
+        let r = parseInt(Math.random() * 255);
+        let g = parseInt(Math.random() * 255);
+        let b = parseInt(Math.random() * 255);
+        return `rgba(${r}, ${g}, ${b}, ${1})`;
     }
+    
     
     criaSpriteAle(n=1){
         const pc = this.pc;
+        const cor = this.corCriado();
         for (let i = 0; i < n; i++) {
             let sprite = new Sprite({
                 x : this.valorCriado(100, 200),
                 y : this.valorCriado(100, 200),
                 vx : this.valorCriado(-10, 10),
                 vy : this.valorCriado(-10, 10),
-                cor : this.corCriado(0,360),
+                cor : cor,
                 controlar : function perseguePC(dt){
                     this.vx =30 * Math.sign(pc.x - this.x);
                     this.vy = 30 * Math.sign(pc.y - this.y);
                 },
                 tags: ["enemy"],
+                
             });
-            
             this.adicionar(sprite);
             sprite.passo(0);
         }
@@ -85,7 +99,6 @@ export default class CenaJogo extends Cena{
 
         const pc = new Sprite({x: 56,y:148, color:"#708090",tags:["pc"]});
         this.pc = pc;
-        pc.tags.add("pc");
         const cena = this;
         pc.controlar = function(dt){
             if (cena.input.comandos.get("MOVE_ESQUERDA")) {
@@ -96,9 +109,7 @@ export default class CenaJogo extends Cena{
                 this.vx = 0;
             }
             if (cena.input.comandos.get("MOVE_CIMA")) {
-                if (this.vy < 0.1) {
-                    this.vy = -300;
-                }
+                this.vy = -200;
             }else if (cena.input.comandos.get("MOVE_BAIXO")) {
                 this.vy = 800;
             }else{

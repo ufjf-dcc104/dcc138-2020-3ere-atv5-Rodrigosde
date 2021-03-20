@@ -11,7 +11,7 @@ export default class Sprite{
         vy=0,
         w=20,
         h=20,
-        color = "red",
+        cor = "#FAFAD2",
         controlar = ()=>{},
         tags = ["pc"],
 }={}){
@@ -21,7 +21,7 @@ export default class Sprite{
         this.vy = vy;
         this.w = w;
         this.h = h;
-        this.color = color;
+        this.cor = cor;
         this.cena = null;
         this.mx = 0;
         this.my = 0; 
@@ -30,7 +30,7 @@ export default class Sprite{
         tags.forEach((tag)=>{this.tags.add(tag);});      
     }
     desenhar(ctx){
-        ctx.fillStyle = this.color;
+        ctx.fillStyle = this.cor;
         ctx.fillRect(this.x - this.w/2, this.y - this.h/2, this.w,this.h);
         ctx.strokeStyle = "grey";
         ctx.strokeRect(
@@ -45,6 +45,7 @@ export default class Sprite{
 
     }
     mover(dt){
+        
         this.vy = this.vy + 300*dt;
         const dx = Math.min(Math.abs(this.vx * dt),this.w/2 - 1);
         const sx = Math.sign(this.vx);
@@ -52,6 +53,7 @@ export default class Sprite{
         const sy = Math.sign(this.vy);
         this.x = this.x + sx*dx;
         this.y = this.y + sy*dy;
+        
         this.mx = Math.floor(this.x / this.cena.mapa.SIZE);
         this.my = Math.floor(this.y / this.cena.mapa.SIZE);
     }
