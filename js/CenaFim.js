@@ -8,10 +8,17 @@ export default class CenaFim extends Cena{
         this.ctx.font = "20px Impact ";
         this.ctx.fillStyle = "red";
         this.ctx.textAlign = "center";
-        this.ctx.fillText("GAME OVER", this.canvas.width/2, this.canvas.height/2-10);
+        if (document.getElementById("moedas").textContent < 6) {
+            this.ctx.fillText("GAME OVER", this.canvas.width/2, this.canvas.height/2-10);
+        }
+        if (document.getElementById("moedas").textContent == 6) {
+            this.ctx.fillText("VOCÊ VENCEU, PARABÉNS!!", this.canvas.width/2, this.canvas.height/2-10);
+        }
+        this.ctx.fillText("Moedas: "+document.getElementById("moedas").textContent,this.canvas.width / 2,this.canvas.height / 2 + 20);
+      
         if (this.assets.acabou()) {
-            this.ctx.fillStyle = "green";
-            this.ctx.fillText("Aperte espaço para jogar novamente!", this.canvas.width/2, this.canvas.height/2+30);
+            this.ctx.fillStyle = "red";
+            this.ctx.fillText("Aperte espaço para jogar novamente!", this.canvas.width/2, this.canvas.height/2+50);
         }
     }
     quadro(t){

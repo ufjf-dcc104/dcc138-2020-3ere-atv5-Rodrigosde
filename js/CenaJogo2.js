@@ -114,7 +114,7 @@ export default class CenaJogo extends Cena{
     }
     
     preparar(){
-        document.getElementById("moedas").textContent = 0;
+        document.getElementById("moedas").textContent = document.getElementById("moedas").textContent;
         super.preparar();
         const mapa1 = new Mapa(10, 14, 32);
         mapa1.carregaMapa(modeloMapa1);
