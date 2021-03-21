@@ -8,24 +8,22 @@ export default class CenaJogo extends Cena{
         super();
         this.criar = 2;
         this.pc = null;
+        this.pontos = 0;
     }
     desenhar() {
-        const pontos = 0;
+        const sprites1 = new Sprite();
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.mapa?.desenhar(this.ctx);
         if (this.assets.acabou()) {
-          for (let s = 0; s < this.sprites.length; s++) {
-            const sprite = this.sprites[s];
-            sprite.aplicaRestricoes();
-            sprite.desenhar(this.ctx);
-          }
+            for (let s = 0; s < this.sprites.length; s++) {
+                const sprite = this.sprites[s];
+                sprite.aplicaRestricoes();
+                sprite.desenhar(this.ctx);
+            }
         }
-        
-        this.ctx.fillStyle = "white";
-        this.ctx.fillText(pontos, 10, 20);
+       
     }
     passo(dt){
-       
         for (const sprite of this.sprites) {
             sprite.passo(dt);
         }
@@ -35,9 +33,10 @@ export default class CenaJogo extends Cena{
             this.criaSpriteAle();
         }
     }
+    
     quandoColidir(a,b){
-        
-        if (!a.tags.has("enemy") &&  b.tags.has("enemy")) {
+        //MORRER
+        if (a.tags.has("pc") &&  b.tags.has("enemy")) {
             this.assets.play("boom");
             this.rodando = false;
             this.game.selecionaCena("fim") ;
@@ -45,7 +44,7 @@ export default class CenaJogo extends Cena{
                 this.aRemover.push(b);
             }
         }
-        if (!a.tags.has("pc") &&  b.tags.has("pc")) {
+        if (a.tags.has("enemy") &&  b.tags.has("pc")) {
             this.assets.play("boom");
             this.rodando = false;
             this.game.selecionaCena("fim") ;
@@ -53,6 +52,39 @@ export default class CenaJogo extends Cena{
                 this.aRemover.push(a);
             }
         }
+        //MOEDAS
+        if (a.tags.has("moeda") &&  b.tags.has("pc")) {
+            if (a.tags.has("moeda")) {
+                this.aRemover.push(a);
+            }
+            if (b.tags.has("moeda")) {
+                his.aRemover.push(b);
+            }
+            this.assets.play("moeda");
+            document.getElementById("moedas").textContent = parseInt(document.getElementById("moedas").textContent) + 1;
+            return;
+        }
+        if (a.tags.has("pc") &&  b.tags.has("moeda")) {
+            if (a.tags.has("moeda")) {
+                this.aRemover.push(a);
+            }
+            if (b.tags.has("moeda")) {
+                this.aRemover.push(b);
+            }
+            this.assets.play("moeda");
+            document.getElementById("moedas").textContent = parseInt(document.getElementById("moedas").textContent) + 1;
+            return;
+        }
+        //PORTAL
+        if (a.tags.has("porta") &&  b.tags.has("pc")) {
+            this.game.selecionaCena("jogo2") ;
+            return;
+        }
+        if (a.tags.has("pc") &&  b.tags.has("porta")) {
+            this.game.selecionaCena("jogo2") ;
+            return;
+        }
+        
     }
     valorCriado(min,max){
         min = Math.ceil(min);
@@ -92,12 +124,21 @@ export default class CenaJogo extends Cena{
     }
     
     preparar(){
+        document.getElementById("moedas").textContent = 0;
         super.preparar();
         const mapa1 = new Mapa(10, 14, 32);
         mapa1.carregaMapa(modeloMapa1);
         this.configuraMapa(mapa1);
 
-        const pc = new Sprite({x: 56,y:148, color:"#708090",tags:["pc"]});
+        const pc = new Sprite({x: 56,y:148, cor:"#FAFAD2",tags:["pc"]});
+        
+        const moeda1 = new Sprite({x: 300,y:130,vx:0,vy:0, cor:"#FFFF00",tags:["moeda"]});
+        const moeda2 = new Sprite({x: 170,y:218,vx:0,vy:0, cor:"#FFFF00",tags:["moeda"]});
+        const fase = new Sprite({x: 56,y:80,vx:0,vy:0, cor:"greenyellow",tags:["porta"]});
+        this.adicionar(moeda1);
+        this.adicionar(moeda2);
+        this.adicionar(fase);
+
         this.pc = pc;
         const cena = this;
         pc.controlar = function(dt){
