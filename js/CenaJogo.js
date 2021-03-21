@@ -143,16 +143,16 @@ export default class CenaJogo extends Cena{
         const cena = this;
         pc.controlar = function(dt){
             if (cena.input.comandos.get("MOVE_ESQUERDA")) {
-                this.vx = -800;
+                this.vx = -150;
             }else if (cena.input.comandos.get("MOVE_DIREITA")) {
-                this.vx = 800;
+                this.vx = 150;
             }else{
                 this.vx = 0;
             }
             if (cena.input.comandos.get("MOVE_CIMA")) {
-                this.vy = -200;
+                this.vy = -150;
             }else if (cena.input.comandos.get("MOVE_BAIXO")) {
-                this.vy = 800;
+                this.vy = 150;
             }else{
                 //this.vy = 0;
             }
