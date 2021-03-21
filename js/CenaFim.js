@@ -14,7 +14,7 @@ export default class CenaFim extends Cena{
         if (document.getElementById("moedas").textContent == 6) {
             this.ctx.fillText("VOCÊ VENCEU, PARABÉNS!!", this.canvas.width/2, this.canvas.height/2-10);
         }
-        this.ctx.fillText("Moedas: "+document.getElementById("moedas").textContent,this.canvas.width / 2,this.canvas.height / 2 + 20);
+        this.ctx.fillText("Moedas: "+document.getElementById("moedas").textContent+"/6",this.canvas.width / 2,this.canvas.height / 2 + 20);
       
         if (this.assets.acabou()) {
             this.ctx.fillStyle = "red";
